@@ -1,0 +1,30 @@
+import telegram
+from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
+
+# Sostituisci 'YOUR_BOT_TOKEN' con il token del tuo bot
+bot_token = '6342592097:AAGY48M9EYFvZfrwzSspEv0yJqtJkLEtpMU'
+
+def start(update, context):
+    chat_id = update.message.chat_id
+    bot.send_message(chat_id=chat_id, text="Ciao! Sono il tuo bot. Inviami un messaggio qualsiasi e ti invierò un link al sito web.")
+
+def send_website_link(update, context):https://github.com/AGF93/bot/tree/main
+    chat_id = update.message.chat_id
+    website_link = "https://www.frascablog.altervista.org"
+    bot.send_message(chat_id=chat_id, text=f"Visita il sito: {website_link}")
+
+def main():
+    updater = Updater(token=bot_token, use_context=True)
+    dp = updater.dispatcher
+
+    # Aggiungi un gestore per il comando /start
+    dp.add_handler(CommandHandler("start", start))
+
+    # Aggiungi un gestore per i messaggi di testo (qualsiasi testo inviato al bot)
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, send_website_link))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
